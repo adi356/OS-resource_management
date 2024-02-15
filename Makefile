@@ -1,0 +1,31 @@
+CC = gcc
+CFLAGS = -g -Wall
+OSS_TARGET = oss
+OSS_OBJ = oss.o
+OSS_C = oss.c
+USER_PROCESS_TARGET = user_proc
+USER_PROCESS_OBJ = user_process.o
+USER_PROCESS_C = user_process.c
+QUEUE_TARGET = queue
+QUEUE_OBJ = queue.o
+QUEUE_C = queue.c
+
+all: $(OSS_TARGET) $(USER_PROCESS_TARGET) $(QUEUE_TARGET)
+
+$(OSS_TARGET): $(OSS_OBJ) $(QUEUE_OBJ)
+	$(CC) -o $(OSS_TARGET) $(OSS_OBJ) $(QUEUE_OBJ)
+
+$(USER_PROCESS_TARGET): $(USER_PROCESS_OBJ)
+	$(CC) -o $(USER_PROCESS_TARGET) $(USER_PROCESS_OBJ)
+
+$(OSS_OBJ): $(OSS_C)
+	$(CC) -c $(OSS_C) $(CFLAGS)
+
+$(USER_PROCESS_OBJ): $(USER_PROCESS_C)
+	$(CC) -c $(USER_PROCESS_C) $(CFLAGS)
+
+$(QUEUE_OBJ): $(QUEUE_C)
+	$(CC) -c $(QUEUE_C) $(CFLAGS)
+
+clean:
+	rm -rf $(OSS_TARGET) $(OSS_OBJ) $(USER_PROCESS_TARGET) $(USER_PROCESS_OBJ) $(QUEUE_TARGET) $(QUEUE_OBJ) logfile *.o *~
